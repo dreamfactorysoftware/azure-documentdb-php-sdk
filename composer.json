@@ -1,0 +1,43 @@
+{
+  "name":         "dreamfactory/azure-documentdb-php-sdk",
+  "description":  "A simple PHP SDK for Microsoft Azure DocumentDB.",
+  "keywords":     [
+    "rest",
+    "azure",
+    "documentdb",
+    "nosql",
+    "database"
+  ],
+  "homepage":     "https://www.dreamfactory.com/",
+  "license":      "Apache-2.0",
+  "authors":      [
+    {
+      "name":  "Arif Islam",
+      "email": "arifislam@dreamfactory.com"
+    },
+    {
+      "name":  "Lee Hicks",
+      "email": "leehicks@dreamfactory.com"
+    }
+  ],
+  "support":      {
+    "email":  "support@dreamfactory.com",
+    "source": "https://github.com/dreamfactorysoftware/azure-documentdb-php-sdk",
+    "issues": "https://github.com/dreamfactorysoftware/azure-documentdb-php-sdk/issues",
+    "wiki":   "https://wiki.dreamfactory.com"
+  },
+  "require": {
+    "php": ">=5.6",
+    "ext-curl": "*"
+  },
+  "autoload":     {
+    "psr-4": {
+      "DreamFactory\\DocumentDb\\": "src/"
+    }
+  },
+  "extra":        {
+    "branch-alias": {
+      "dev-develop": "0.1.x-dev"
+    }
+  }
+}
