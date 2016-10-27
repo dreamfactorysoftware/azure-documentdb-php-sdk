@@ -2,12 +2,14 @@
 
 namespace DreamFactory\DocumentDb;
 
+use DreamFactory\DocumentDb\Contracts\ClientInterface;
+
 /**
  * Class Client
  *
  * @package DreamFactory\DocumentDb
  */
-class Client
+class Client implements ClientInterface
 {
     /** API Version */
     const X_MS_VERSION = '2015-12-16';
@@ -59,16 +61,16 @@ class Client
      * @param array  $payload      Posted data
      * @param array  $extraHeaders Additional request headers
      *
-     * @return mixed
+     * @return array
      * @throws \Exception
      */
     public function request(
         $verb,
         $resourcePath,
         $resourceType,
-        $resourceId,
-        $payload = [],
-        $extraHeaders = []
+        $resourceId = '',
+        array $payload = [],
+        array $extraHeaders = []
     ){
         $query = false;
         $length = 0;
@@ -106,16 +108,21 @@ class Client
             $options[CURLOPT_CUSTOMREQUEST] = $verb;
         }
 
-        if(true === static::$debug){
+        if (true === static::$debug) {
             print_r($options);
         }
 
         try {
             $ch = curl_init();
             curl_setopt_array($ch, $options);
-            $response = curl_exec($ch);
+            $result = curl_exec($ch);
+            $info = curl_getinfo($ch);
+            curl_close($ch);
 
-            return json_decode($response, true);
+            $response = json_decode($result, true);
+            $response['_curl_info'] = $info;
+
+            return $response;
         } catch (\Exception $e) {
             throw $e;
         }
@@ -131,7 +138,7 @@ class Client
      * @param int    $contentLength Content length of posted data
      * @param array  $extraHeaders  Additional request headers
      *
-     * @return array
+     * @return array Array of request headers
      */
     protected function generateRequestHeaders(
         $verb,
@@ -139,7 +146,7 @@ class Client
         $resourceId,
         $isQuery = false,
         $contentLength = 0,
-        $extraHeaders = []
+        array $extraHeaders = []
     ){
         $xMsDate = gmdate('D, d M Y H:i:s T');
         $headers = [
@@ -152,12 +159,13 @@ class Client
         ];
 
         if (in_array($verb, [Verbs::POST, Verbs::PUT])) {
-            $headers[] = 'Content-Type: application/json';
             $headers[] = 'Content-Length: ' . $contentLength;
 
             if ($isQuery === true) {
                 $headers[] = 'Content-Type: application/query+json';
                 $headers[] = 'x-ms-documentdb-isquery: True';
+            } else {
+                $headers[] = 'Content-Type: application/json';
             }
         }
 
@@ -174,7 +182,7 @@ class Client
      * @param string $resourceType Requested resource Type
      * @param string $resourceId   Requested resource ID
      *
-     * @return string Array of Request Headers
+     * @return string Authorization string
      */
     private function generateAuthHeader($verb, $xMsDate, $resourceType, $resourceId)
     {
