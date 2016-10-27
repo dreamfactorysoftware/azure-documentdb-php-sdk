@@ -79,6 +79,9 @@ class Collection extends BaseResource implements ResourceInterface
     /** {@inheritdoc} */
     public function replace(array $data, $id = null)
     {
+        if (!isset($data['id'])) {
+            throw new \InvalidArgumentException('No id found in data. Id is required to replace a Collection.');
+        }
         $id = $this->getId($id);
         $path = '/' . Database::TYPE .
             '/' . $this->dbId .
