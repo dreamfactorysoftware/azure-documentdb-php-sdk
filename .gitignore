@@ -1,5 +1,5 @@
 /vendor
 /.idea
-/dev-test
+/dev-test-files
 composer.phar
 composer.lock
