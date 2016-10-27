@@ -106,7 +106,9 @@ class Client
             $options[CURLOPT_CUSTOMREQUEST] = $verb;
         }
 
-        print_r($options);
+        if(true === static::$debug){
+            print_r($options);
+        }
 
         try {
             $ch = curl_init();
