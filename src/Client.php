@@ -89,7 +89,8 @@ class Client implements ClientInterface
             CURLOPT_SSLVERSION     => CURL_SSLVERSION_DEFAULT,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_VERBOSE        => static::$debug,
-            CURLOPT_HTTPHEADER     => $headers
+            CURLOPT_HTTPHEADER     => $headers,
+            CURLOPT_HEADER         => true,
         ];
 
         if ($verb === Verbs::POST) {
@@ -119,7 +120,20 @@ class Client implements ClientInterface
             $info = curl_getinfo($ch);
             curl_close($ch);
 
-            $response = json_decode($result, true);
+            $headerArray = [];
+            $headers = explode("\n", substr($result, 0, $info['header_size']));
+            foreach ($headers as $header){
+                $firstColonPosition = strpos($header, ':');
+                if(!empty($header) && false !== $firstColonPosition && $firstColonPosition > 0){
+                    $key = substr($header, 0, $firstColonPosition);
+                    $value = substr($header, $firstColonPosition+1);
+                    $headerArray[$key] = $value;
+                }
+            }
+            $info['response_headers'] = $headerArray;
+            $body = substr($result, $info['header_size']);
+
+            $response = json_decode($body, true);
             $response['_curl_info'] = $info;
 
             return $response;
