@@ -35,7 +35,7 @@ class DatabaseTest extends PHPUnit_Framework_TestCase
     {
         $this->db->create(['id' => 'unit-test-db1']);
         $this->db->create(['id' => 'unit-test-db2']);
-        $rs = $this->db->list();
+        $rs = $this->db->getAll();
         $dbs = $rs['Databases'];
 
         $list = [];
@@ -64,7 +64,7 @@ class DatabaseTest extends PHPUnit_Framework_TestCase
         $rs = $this->db->create(['id' => 'unit-test-delete']);
         $this->assertEquals('unit-test-delete', $rs['id']);
         $this->db->delete('unit-test-delete');
-        $rs = $this->db->list();
+        $rs = $this->db->getAll();
         $dbs = $rs['Databases'];
 
         $list = [];

@@ -40,7 +40,7 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     public function testListCollection()
     {
         $this->coll->create(['id' => 'unit-test-coll3']);
-        $rs = $this->coll->list();
+        $rs = $this->coll->getAll();
         $colls = $rs['DocumentCollections'];
         $list = [];
         foreach ($colls as $coll){
@@ -69,7 +69,7 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $rs = $this->coll->create(['id' => 'unit-test-coll5']);
         $this->assertEquals('unit-test-coll5', $rs['id']);
         $this->coll->delete('unit-test-coll5');
-        $rs = $this->coll->list();
+        $rs = $this->coll->getAll();
         $colls = $rs['DocumentCollections'];
         $list = [];
         foreach ($colls as $coll){

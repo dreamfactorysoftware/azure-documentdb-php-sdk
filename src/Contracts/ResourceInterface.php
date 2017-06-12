@@ -14,7 +14,7 @@ interface ResourceInterface
      *
      * @return array
      */
-    public function list();
+    public function getAll();
 
     /**
      * Gets a resource
