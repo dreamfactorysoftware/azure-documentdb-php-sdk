@@ -34,7 +34,7 @@ class Collection extends BaseResource implements ResourceInterface
     }
 
     /** {@inheritdoc} */
-    public function list()
+    public function getAll()
     {
         $path = '/' . Database::TYPE .
             '/' . $this->dbId .
