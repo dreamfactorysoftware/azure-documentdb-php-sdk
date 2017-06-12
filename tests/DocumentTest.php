@@ -45,7 +45,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
     public function testListDocument()
     {
         $this->doc->create(['id'=>'doc3', 'name' => 'doc3']);
-        $rs = $this->doc->list();
+        $rs = $this->doc->getAll();
         $docs = $rs['Documents'];
         $list = [];
         foreach ($docs as $doc){
@@ -85,7 +85,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $rs = $this->doc->create(['id' => 'doc6']);
         $this->assertEquals('doc6', $rs['id']);
         $this->doc->delete('doc6');
-        $rs = $this->doc->list();
+        $rs = $this->doc->getAll();
         $docs = $rs['Documents'];
         $list = [];
         foreach ($docs as $doc){

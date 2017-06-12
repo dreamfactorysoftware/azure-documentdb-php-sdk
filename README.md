@@ -6,7 +6,7 @@ PHP SDK for Azure DocumentDB
     $client = new DreamFactory\DocumentDb\Client('azure_host_uri', 'azure_document_db_key');
     
     $db = new \DreamFactory\DocumentDb\Resources\Database($client);
-    $db->list()
+    $db->getAll()
     $db->get('db-id');
     $db->create(['id'=>'my_db']);
     $db->delete('db-id');
@@ -15,7 +15,7 @@ PHP SDK for Azure DocumentDB
     $db->setHeaders(['Content-Type: application/json']);
     
     $coll = new \DreamFactory\DocumentDb\Resources\Collection($client, 'db-id');
-    $coll->list();
+    $coll->getAll();
     $coll->get('coll-id');
     $coll->create(['id'=>'1']);
     $coll->replace(['id'=>'1', 'indexingPolicy'=>[...]], 'coll-id');
@@ -25,7 +25,7 @@ PHP SDK for Azure DocumentDB
     $coll->setHeaders(['Content-Type: application/json']);
     
     $doc = new \DreamFactory\DocumentDb\Resources\Document($client, 'db-id', 'coll-id');
-    $doc->list();
+    $doc->getAll();
     $doc->get('doc-id');
     $doc->create(['id'=>'1', 'name'=>'foobar']);
     $doc->replace(['id'=>'1', 'name'=>'foobar-replaced'], 'doc-1');

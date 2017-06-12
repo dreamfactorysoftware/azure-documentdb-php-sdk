@@ -15,7 +15,7 @@ class Client implements ClientInterface
     const X_MS_VERSION = '2015-12-16';
 
     /** User Agent name */
-    const USER_AGENT = 'df.documentdb.php.sdk/0.1.0';
+    const USER_AGENT = 'df.documentdb.php.sdk/0.2.0';
 
     /** @var bool Debug flag */
     public static $debug = false;

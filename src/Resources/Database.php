@@ -28,7 +28,7 @@ class Database extends BaseResource implements ResourceInterface
     }
 
     /** {@inheritdoc} */
-    public function list()
+    public function getAll()
     {
         $result = $this->request(Verbs::GET, '/' . static::TYPE);
 
