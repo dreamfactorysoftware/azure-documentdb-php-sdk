@@ -203,12 +203,13 @@ class Client implements ClientInterface
         $master = 'master';
         $token = '1.0';
         $key = base64_decode($this->key);
-        $stringToSign = $verb . "\n" .
-            $resourceType . "\n" .
+        $stringToSign = strtolower($verb) . "\n" .
+            strtolower($resourceType) . "\n" .
             $resourceId . "\n" .
-            $xMsDate . "\n" .
+            strtolower($xMsDate) . "\n" .
             "\n";
-        $sig = base64_encode(hash_hmac('sha256', strtolower($stringToSign), $key, true));
+
+        $sig = base64_encode(hash_hmac('sha256', $stringToSign, $key, true));
 
         return urlencode("type=$master&ver=$token&sig=$sig");
     }
